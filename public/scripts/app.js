@@ -1,6 +1,6 @@
 var socket = io();
 
-angular.module('chatterApp', ['ngRoute'])
+angular.module('chatterApp', ['ngRoute', 'angularMoment'])
   .config(['$routeProvider', '$locationProvider',
     function($routeProvider, $locationProvider) {
       $routeProvider
@@ -22,10 +22,11 @@ angular.module('chatterApp', ['ngRoute'])
       socket.emit('while gone', "");
 
       socket.on('while gone', function(msg){
+        console.log(msg);
         $scope.messages = msg;
 
-        console.log($scope.messages);
-        $scope.$apply();
+        // console.log($scope.messages);
+          $scope.$apply();
       })
 
       $('form').submit(function(){

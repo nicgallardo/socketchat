@@ -15,13 +15,16 @@ app.get('/*', function(req, res){
 io.on('connection', function(socket){
   var allMessages;
   Messages.find({}, function(err, messages){
-    allMessages = messages;
+
+    allMessages = messages.splice(messages.length-6, 6);
+    console.log(allMessages);
   })
   socket.on('while gone', function(){
     io.emit('while gone', allMessages);
   })
   socket.on('chat message', function(msg){
-    Messages.insert({message: msg}).then(function(){
+    time = Date.now();
+    Messages.insert({message: msg, timestamp: time}).then(function(){
       io.emit('chat message', msg);
     });
   });
